@@ -355,17 +355,10 @@ public class TaskEditFragment extends MapFragment{
     }
 
     private QMUIListPopup mListPopup;
-    private Boolean drawAreaFlag=false;
     private List<String> GetItems(){
         List<String> data = new ArrayList<>();
-        if(drawAreaFlag){
-            data.add("退出编辑");
-            data.add("清除变高区域");
-        }
-        else{
-            data.add("绘制变高区域");
-            data.add("清除变高区域");
-        }
+        data.add("绘制变高区域");
+        data.add("清除变高区域");
         return data;
     }
     private void initListPopupIfNeed() {
@@ -376,18 +369,8 @@ public class TaskEditFragment extends MapFragment{
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     if(i==0){//编辑
-                        if(drawAreaFlag){
-                            drawAreaFlag=false;
-                            maptool.CloseTool(AmapTool.TOOL_DRAWAREA);
-                        }
-                        else{
-                            drawAreaFlag=true;
-                            maptool.OpenTool(AmapTool.TOOL_DRAWAREA);
-                            mListPopup.dismiss();
-                        }
-                        adapter.clear();
-                        adapter.addAll(GetItems());
-                        adapter.notifyDataSetChanged();
+                        maptool.OpenTool(AmapTool.TOOL_DRAWAREA);
+                        mListPopup.dismiss();
                     }
                     else{
                         maptool.ClearDrawArea();

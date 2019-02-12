@@ -54,6 +54,7 @@ public class AmapTool {
     private List<LatLng> pointsDrawArea=new ArrayList<>();//绘制区域时的顶点坐标
     private Polygon drawArea;//区域
     private List<Marker> drawAreaMarkers=new ArrayList<>();//顶点marker
+    private Marker okMarker;
 
     TileOverlay tileOverlay;//谷歌地图图层
     AMapLocationClient mlocationClient;//地图定位对象
@@ -77,12 +78,18 @@ public class AmapTool {
         if(drawArea!=null){
             drawArea.remove();
         }
+        if(okMarker!=null){
+            okMarker.remove();
+        }
         pointsDrawArea.clear();
     }
     public void LoadDrawArea(List<LatLng> rect,int color){
         ClearMarker(drawAreaMarkers);
         if(drawArea!=null){
             drawArea.remove();
+        }
+        if(okMarker!=null){
+            okMarker.remove();
         }
         if(rect!=null){
             pointsDrawArea=rect;
@@ -209,13 +216,19 @@ public class AmapTool {
                     if(drawArea!=null){
                         drawArea.remove();
                     }
+                    if(okMarker!=null){
+                        okMarker.remove();
+                    }
                     pointsDrawArea.add(latLng);
-                    Marker marker= AddPoint(R.drawable.point,latLng,false,null,null,0.5f,0.5f);//加顶点
+                    Marker marker= AddPoint(R.drawable.pointshow,latLng,false,null,null,0.5f,0.5f);//加顶点
                     drawArea= _amap.addPolygon(new PolygonOptions()
                             .addAll(pointsDrawArea)
                             .fillColor(Color.argb(50, 0, 128, 0))//0,128,0
                             .strokeColor(Color.GREEN).strokeWidth(1));//绘制区域
                     drawAreaMarkers.add(marker);
+                    if(pointsDrawArea.size()>2){
+                        okMarker=AddPoint(R.drawable.ok,latLng,false,null,null,0.5f,0.5f);//加顶点
+                    }
                     drawArea.setZIndex(10);
                 }
             });
@@ -279,6 +292,9 @@ public class AmapTool {
         if(toolType==TOOL_DRAWAREA){
             _amap.setOnMapClickListener(null);
             ClearMarker(drawAreaMarkers);
+            if(okMarker!=null){
+                okMarker.remove();
+            }
             Common.ShowQMUITipToast(_context,"区域绘制关闭", QMUITipDialog.Builder.ICON_TYPE_INFO,500);
         }
     }
@@ -614,6 +630,9 @@ public class AmapTool {
                     Marker newmarker=_amap.addMarker(markerOptions);
                     polygon.add(i,newmarker);//点要加载正确的位置
                     marker.remove();
+                }
+                if(okMarker.equals(marker)){
+                    CloseTool(TOOL_DRAWAREA);
                 }
                 List<LatLng> list = new ArrayList<LatLng>();
                 for (int i = 0; i < polygon.size(); i++) {
