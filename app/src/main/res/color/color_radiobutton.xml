@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true" android:color="@color/qmui_config_color_gray_6"/>
+    <!-- not selected -->
+    <item android:state_checked="false" android:color="@color/qmui_config_color_blue"/>
+</selector>

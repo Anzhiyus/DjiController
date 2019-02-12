@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <dji.ux.widget.FPVWidget
+        android:id="@+id/fpvwidget"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <dji.ux.widget.FPVOverlayWidget
+        android:layout_marginTop="50dp"
+        android:id="@+id/fpvOverlayWidget"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <!--焦距和对焦-->
+    <LinearLayout
+        android:id="@+id/lockAEAF"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_gray"
+        android:orientation="vertical">
+        <dji.ux.widget.AutoExposureLockWidget
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <dji.ux.widget.FocusModeWidget
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+        <dji.ux.widget.FocusExposureSwitchWidget
+            android:layout_width="35dp"
+            android:layout_height="35dp"/>
+    </LinearLayout>
+</RelativeLayout>

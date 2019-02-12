@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:myview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" tools:context=".views.MainTabs"
+    android:background="@color/bg_app">
+    <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--坑B不为什么-ViewPager必须在TabSegment上面否则不显示-->
+        <com.qmuiteam.qmui.widget.QMUIViewPager
+            android:id="@+id/contentViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/qmui_config_color_white"
+
+            />
+        <com.qmuiteam.qmui.widget.QMUITabSegment
+            android:id="@+id/tabSegment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            android:background="@color/dark_gray"
+            />
+        <!--android:background="?attr/qmui_config_color_separator_darken"-->
+    </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+</LinearLayout>

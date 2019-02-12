@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+    <ImageButton
+        android:id="@+id/close_cameraEdit"
+        android:layout_gravity="right"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="8dp"
+        android:scaleType="fitXY"
+        android:background="@color/transparent"
+        android:src="@drawable/close" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:maxLines="1"
+            android:text="相机名称" />
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" android:imeOptions="actionDone"
+            android:layout_gravity="center"
+            android:text=""
+            android:maxLength="10"
+            android:id="@+id/camera_name"
+            />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="焦距mm" />
+
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/focal"
+            android:entries="@array/camera_focal"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="感光度" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/iso_value"
+            android:entries="@array/camera_iso"
+            />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="光圈" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/aperture_value"
+            android:entries="@array/camera_av"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="曝光" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/exposure_value"
+            android:entries="@array/camera_ev"
+            />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="快门" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/camera_shutter"
+            android:id="@+id/shutter_value"
+            />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="分辨率" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/img_size"
+            android:entries="@array/camera_size"
+            />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+
+            android:text="影像类型" />
+        <android.support.v7.widget.AppCompatSpinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/image_type"
+            android:id="@+id/image_type"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="像元尺寸" />
+        <EditText
+            android:layout_width="150dp"
+            android:layout_height="wrap_content" android:imeOptions="actionDone"
+            android:id="@+id/opticalFormat"
+            android:maxLines="1" android:maxLength="4"
+            android:maxEms="10"
+            android:inputType="numberDecimal" />
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="μm" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存"
+        android:layout_gravity="right"
+        android:id="@+id/save_Camera"
+        />
+</LinearLayout>

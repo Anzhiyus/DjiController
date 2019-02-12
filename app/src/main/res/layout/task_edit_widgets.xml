@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_app"
+    android:orientation="horizontal"
+    >
+    <!--高德地图view-->
+    <com.amap.api.maps.TextureMapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <visiontek.djicontroller.forms.userControl.ColorPickerView
+        android:id="@+id/colorPicker"
+        android:layout_width="30dp" app:orientation="vertical"
+        android:layout_height="255dp" android:layout_alignParentLeft="true" android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"/>
+    <TextView android:text="250m" android:layout_marginLeft="8dp" android:id="@+id/customHeight" android:textAlignment="center"
+        android:layout_width="40dp" android:layout_below="@+id/colorPicker"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="match_parent" android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_alignParentBottom="true" android:id="@+id/toolbar"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+            <ImageButton
+                android:id="@+id/locationbtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/location" />
+            <ImageButton
+                android:id="@+id/linemeasurebtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/linemeasure" />
+
+            <ImageButton
+                android:id="@+id/areameasurebtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/areameasure" />
+
+            <Switch
+                android:id="@+id/switch_satellite"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_margin="5dp" android:padding="8dp"
+                android:textSize="13dp"
+                android:background="@drawable/shape_corner"
+                android:textColor="@color/white" android:theme="@style/Switch"
+                android:text="卫星图层" />
+
+            <ImageButton
+                android:id="@+id/countpreviewbtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/computer" />
+            <ImageButton
+                android:id="@+id/kmlbtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/kml_data" />
+            <ImageButton
+                android:id="@+id/taskset"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/list" />
+            <ImageButton
+                android:id="@+id/drawareabtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/drawarea" />
+            <SeekBar
+                android:id="@+id/linerotateset"
+                android:layout_width="150dp" android:theme="@style/SeekBar"
+                android:layout_height="wrap_content"
+                android:min="0"
+                android:max="180"
+                />
+
+            <ImageButton
+                android:id="@+id/savetaskbtn"
+                android:layout_margin="5dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_button"
+                android:padding="8dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/save" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <visiontek.djicontroller.forms.userControl.PullRefreshTaskList
+        android:id="@+id/tasklist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" android:visibility="gone"
+        />
+
+</RelativeLayout>

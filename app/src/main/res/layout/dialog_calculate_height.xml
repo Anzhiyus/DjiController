@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content" android:padding="10dp"
+    android:layout_height="wrap_content">
+
+    <ImageButton
+        android:id="@+id/close"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="8dp"
+        android:layout_gravity="right"
+        android:background="@color/transparent"
+        android:scaleType="fitXY"
+        android:src="@drawable/close" />
+        <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="wrap_content"
+                android:gravity="left|center"
+                android:layout_height="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="相机"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/spinner_camera_list"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"></Spinner>
+
+                <TextView
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="相机方向"
+                    android:textSize="16sp"/>
+                <Spinner
+                    android:id="@+id/spinner_camera_ori"
+                    android:entries="@array/cameraori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </Spinner>
+
+            </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="bottom"
+        android:text="航拍要求："
+        android:textSize="18sp" />
+
+        <LinearLayout
+            android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="39dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="航向重叠度"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_adjacentverlapping"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="%" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center|left"
+                android:text="旁向重叠度"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_parallellapping"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="%" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:text="地面分辨率"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_gsd"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal" />
+                <TextView
+                    android:gravity="center|left"
+                    android:text="m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+
+
+            </LinearLayout>
+        <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="平均高度"
+                android:textSize="16sp" />
+
+            <EditText
+
+                android:id="@+id/et_averageHeight"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="m" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center|left"
+                android:text="高处高程"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_hightHeight"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+        <TextView
+            android:gravity="center|left"
+            android:text="m"
+            android:layout_width="15dp"
+            android:layout_height="match_parent" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="低处高程"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_lowHeight"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+        <TextView
+            android:gravity="center|left"
+            android:text="m"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="bottom"
+        android:text="计算输出参数："
+        android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp">
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="绝对航高"
+                android:textSize="16sp" />
+            <TextView
+                android:textSize="16sp"
+                android:id="@+id/tv_absoluteHeight"
+                android:gravity="center|left"
+                android:layout_width="45dp"
+                android:text="0"
+                android:layout_height="match_parent" />
+            <TextView
+                android:gravity="center|left"
+                android:text="m"
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:textSize="16sp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center|left"
+                android:text="航向隔片重叠度"
+                android:layout_width="115dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_adjacentSeparateverlapping"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="%"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="航线间距"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_lineSpace"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="0"
+                android:textSize="16sp" />
+            <TextView
+                android:gravity="center|left"
+                android:text="m"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp">
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="高处分辨率"
+                android:textSize="16sp" />
+            <TextView
+                android:textSize="16sp"
+                android:id="@+id/tv_high_gsd"
+                android:gravity="center|left"
+                android:layout_width="45dp"
+                android:text="0"
+                android:layout_height="match_parent" />
+            <TextView
+                android:gravity="center|left"
+                android:text="m"
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center|left"
+                android:text="低处分辨率"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_low_gsd"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="m" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp">
+            <TextView
+                android:textSize="16sp"
+                android:gravity="center|left"
+                android:text="高处航向重叠度"
+                android:layout_width="115dp"
+                android:layout_height="match_parent" />
+
+            <TextView
+                android:id="@+id/tv_highAdjacentverlapping"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="%" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:gravity="center|left"
+                android:text="高处旁向重叠度"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_highParallellapping"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="0"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="15dp"
+                android:layout_height="match_parent"
+                android:gravity="center|left"
+                android:text="%" />
+
+        </LinearLayout>
+    <Button
+        android:id="@+id/btn_calculate"
+        android:text="计算" android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+</LinearLayout>

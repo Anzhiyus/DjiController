@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AutoFly</string>
+    <string-array name="spingarr">
+        <item>航点悬停拍摄</item>
+        <item>等距离/时间拍摄</item>
+    </string-array>
+    <string-array name="finishaction">
+        <item>自动返航</item>
+        <item>悬停</item>
+        <item>自动降落</item>
+    </string-array>
+    <string name="app_new_name">AUTOFLY</string>
+    <string name="sdk_registration_fail">SDK注册失败
+    </string>
+    <string name="sdk_registration_success">SDK注册成功
+    </string>
+    <string name="connection_loose">连接丢失</string>
+
+
+</resources>

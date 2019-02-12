@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    >
+    <ImageButton
+        android:id="@+id/btn_cancel"
+        android:layout_gravity="right"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:padding="8dp"
+        android:scaleType="fitXY"
+        android:background="@color/transparent"
+         android:src="@drawable/close" />
+    <LinearLayout
+        android:layout_width="wrap_content" android:gravity="left|center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="任务名称" />
+        <EditText
+            android:id="@+id/et_taskname"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:singleLine="true" android:imeOptions="actionDone"
+            android:text="" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content" android:layout_marginLeft="50dp"
+            android:text="完成动作" />
+        <Spinner
+            android:id="@+id/spinner_finishaction"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:entries="@array/finishaction" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="相机型号" />
+        <Spinner
+            android:id="@+id/spinner_camera"
+            android:layout_width="150dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content"
+            />
+
+        <Button
+            android:id="@+id/btn_mngCamera"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="管理" />
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="朝向" />
+        <Spinner
+            android:id="@+id/spinner_camera_orientation"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:entries="@array/cameraori" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="地面分辨率"
+            />
+
+        <EditText
+            android:id="@+id/et_gsd"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:maxLength="5"
+            />
+
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="M"
+            />
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="悬停拍照" />
+        <Spinner
+            android:id="@+id/spinner_photoswitch"
+            android:layout_gravity="center_vertical"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/spniner_ishover" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content" android:gravity="left|center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="基准面海拔" />
+
+        <EditText
+            android:id="@+id/et_basicheight"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical" android:imeOptions="actionDone"
+            android:inputType="number"
+            android:text="" />
+        <TextView
+            android:text="M"
+            android:layout_width="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"
+            android:text="起飞点海拔" />
+        <EditText
+            android:id="@+id/et_startingheight" android:imeOptions="actionDone"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:inputType="number"
+            android:text="" />
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="M" />
+    </LinearLayout>
+    <LinearLayout
+        android:gravity="left|center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="飞行速度"
+            android:layout_width="70dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content" />
+
+        <SeekBar
+            android:id="@+id/sb_speed" android:theme="@style/SeekBar"
+            android:max="12"
+            android:background="@null"
+            android:progress="10"
+            android:layout_width="150dp"
+            android:layout_height="40dp" />
+        <TextView
+            android:id="@+id/tv_speed"
+            android:text="10"
+            android:layout_width="20dp" android:inputType="number"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="M/S"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:text="俯仰角度" />
+        <SeekBar
+            android:id="@+id/sb_pitchangle" android:theme="@style/SeekBar"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:progress="0"
+            android:max="90" />
+        <TextView
+            android:id="@+id/tv_pitchangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="°" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="航向重叠度" />
+
+        <SeekBar
+            android:id="@+id/sb_adjacentverlap" android:theme="@style/SeekBar"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:max="90"
+            android:progress="80" />
+
+        <TextView
+            android:id="@+id/tv_adjacentverlap"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="80" />
+
+        <TextView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="%" />
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="旁向重叠度" />
+        <SeekBar
+            android:id="@+id/sb_parallellap" android:theme="@style/SeekBar"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:background="@null"
+            android:max="90"
+            android:progress="60"
+            />
+        <TextView
+            android:id="@+id/tv_parallellap"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="60" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="%" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content" android:layout_gravity="right"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="返航高度" />
+        <EditText
+            android:id="@+id/gohomeHeight"
+            android:imeOptions="actionDone"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:inputType="number"
+            android:text="" />
+        <Switch
+            android:id="@+id/cameraSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:text="第三方相机" />
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_gravity="right"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="保存" />
+    </LinearLayout>
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
