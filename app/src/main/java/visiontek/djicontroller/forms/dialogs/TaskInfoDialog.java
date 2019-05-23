@@ -2,6 +2,7 @@ package visiontek.djicontroller.forms.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,6 +39,7 @@ import visiontek.djicontroller.orm.FlyTask;
 import visiontek.djicontroller.util.Common;
 
 import static android.content.Context.MODE_PRIVATE;
+import static visiontek.djicontroller.forms.fragment.MapFragment.ON_TASK_LOAD;
 
 public class TaskInfoDialog extends DialogFragment {
     private Context mContext;
@@ -268,6 +270,11 @@ public class TaskInfoDialog extends DialogFragment {
                         TaskViewModel taskViewModel=new TaskViewModel(flyTaskEntity,camera);
                         taskManager.SaveTask(taskViewModel);
                         dismiss();
+                        if(taskViewModel.id!=null&&taskViewModel.id.length()>0){
+                            Intent intent = new Intent(ON_TASK_LOAD);
+                            intent.putExtra("id",taskViewModel.id);
+                            getContext().sendBroadcast(intent);
+                        }
                         Common.ShowQMUITipToast(getContext(),"保存成功", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,1000);
                     }
                 }

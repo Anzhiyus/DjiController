@@ -171,7 +171,7 @@ public class FlightControllerTool {
             if (mFlightController != null) {
                 mFlightController.setControlMode(ControlMode.SMART,null);//智能控制模式。飞机可以在智能模式下稳定其高度和姿态。
                 mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.UNKNOWN,null);//连接失败不GOHOME继续跑
-                mFlightController.setSmartReturnToHomeEnabled(true,null);//低电量时,必须回家
+                mFlightController.setSmartReturnToHomeEnabled(true,null);//电量只够回家,必须回家
                 mFlightController.setMaxFlightHeight(500, null);//设置最大可飞行高度
                 mFlightController.setMaxFlightRadiusLimitationEnabled(false,null);//关闭半径限制
                 mFlightController.setLowBatteryWarningThreshold(35,null);//35%警告
