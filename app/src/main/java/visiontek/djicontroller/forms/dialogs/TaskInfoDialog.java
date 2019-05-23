@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -54,6 +56,7 @@ public class TaskInfoDialog extends DialogFragment {
     private EditText et_homeASL;//起始点海拔高度
     private EditText et_GSD;//分辨率
     private EditText gohomeHeight;
+    private EditText flyHeight;
     private SeekBar sb_speed;//飞行速度
     private SeekBar sb_adjacentverlapping;//航向重叠度Seekbar
     private SeekBar sb_parallellapping;//旁向重叠度Seekbar
@@ -72,8 +75,10 @@ public class TaskInfoDialog extends DialogFragment {
 
     private List<FlyCamera> cameraList=new ArrayList<>();
     private Switch cameraSwitchbtn;
+    private Switch isSrtmSwitchbtn;
     private Button btn_mngCamera;
     CameraListDialog dlgcamera;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         dialog_task= (LinearLayout) inflater.inflate(R.layout.dialog_task,null);
@@ -84,6 +89,8 @@ public class TaskInfoDialog extends DialogFragment {
         initUI();
         getCameraSpinner();
         setData();
+
+
         return dialog_task;
     }
     @Override
@@ -112,6 +119,7 @@ public class TaskInfoDialog extends DialogFragment {
     //初始化界面
     private void initUI() {
         gohomeHeight=dialog_task.findViewById(R.id.gohomeHeight);
+        flyHeight=dialog_task.findViewById(R.id.flyHeight);
         et_taskname = (EditText) dialog_task.findViewById(R.id.et_taskname);
         et_areaASL = (EditText) dialog_task.findViewById(R.id.et_basicheight);
         et_homeASL = (EditText) dialog_task.findViewById(R.id.et_startingheight);
@@ -137,6 +145,7 @@ public class TaskInfoDialog extends DialogFragment {
         spinner_finishaction = (Spinner) dialog_task.findViewById(R.id.spinner_finishaction);
         spinner_hover = (Spinner) dialog_task.findViewById(R.id.spinner_photoswitch);
         cameraSwitchbtn=(Switch) dialog_task.findViewById(R.id.cameraSwitch);
+
         sb_speed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -211,11 +220,24 @@ public class TaskInfoDialog extends DialogFragment {
                 }
             }
         });
+        isSrtmSwitchbtn=(Switch) dialog_task.findViewById(R.id.isSrtm);
+        isSrtmSwitchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {//是否贴地飞行
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (flyTaskEntity!=null){
+                    if(b){
+                        flyTaskEntity.isSrtm=1;
+                    }
+                    else {
+                        flyTaskEntity.isSrtm=0;
+                    }
+                }
+            }
+        });
         btnConfirm = (Button) dialog_task.findViewById(R.id.btn_confirm);
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (flyTaskEntity==null){
                     flyTaskEntity=new FlyTask();
                 }
@@ -237,11 +259,13 @@ public class TaskInfoDialog extends DialogFragment {
                     flyTaskEntity.finishaction=spinner_finishaction.getSelectedItemPosition();
                     flyTaskEntity.isThridCamera=cameraSwitchbtn.isChecked()?1:0;
                     flyTaskEntity.GoHomeHeight=String2Int(gohomeHeight.getText().toString());
+                    String height=flyHeight.getText().toString();
                     if(checkTask(flyTaskEntity)){
-                        TaskViewModel taskViewModel=new TaskViewModel(flyTaskEntity,camera);
-                        if(taskViewModel.GoHomeHeight==0){
-                            taskViewModel.GoHomeHeight=(int)taskViewModel.FlyHeight;
+                        flyTaskEntity.FlyHeight=String2Int(height);//可以手动指定高度
+                        if(flyTaskEntity.GoHomeHeight==0){
+                            flyTaskEntity.GoHomeHeight=(int)flyTaskEntity.FlyHeight;
                         }
+                        TaskViewModel taskViewModel=new TaskViewModel(flyTaskEntity,camera);
                         taskManager.SaveTask(taskViewModel);
                         dismiss();
                         Common.ShowQMUITipToast(getContext(),"保存成功", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,1000);
@@ -268,7 +292,7 @@ public class TaskInfoDialog extends DialogFragment {
         Bundle args=getArguments();
         if(args!=null){
             String taskid=args.getString("taskid");
-            FlyTask task= taskManager.getTask(taskid);
+            FlyTask task= taskManager.getTaskEntity(taskid);
             setTask(task);
         }
         else{
@@ -332,6 +356,7 @@ public class TaskInfoDialog extends DialogFragment {
             tv_pitchangle.setText((String.valueOf(TASK.pitch)));
             spinner_finishaction.setSelection(TASK.finishaction);
             cameraSwitchbtn.setChecked(TASK.isThridCamera==1);
+            flyHeight.setText(String.valueOf((int)TASK.FlyHeight));
         }
     }
 
@@ -360,6 +385,7 @@ public class TaskInfoDialog extends DialogFragment {
         et_areaASL.setText("");
         et_homeASL.setText("");
         et_GSD.setText("");
+        flyHeight.setText("");
         flyTaskEntity=null;
     }
     public FlyTask getTask() {

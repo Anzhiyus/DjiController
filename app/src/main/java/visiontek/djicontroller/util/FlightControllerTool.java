@@ -2,16 +2,26 @@ package visiontek.djicontroller.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
+
+import com.alibaba.fastjson.JSON;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.google.android.gms.common.util.MapUtils;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +67,7 @@ import dji.sdk.remotecontroller.RemoteController;
 import visiontek.djicontroller.DJIApplication;
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.dataManager.TaskManager;
+import visiontek.djicontroller.models.SrtmData;
 import visiontek.djicontroller.models.TaskViewModel;
 import visiontek.djicontroller.orm.FlyAreaPoint;
 import visiontek.djicontroller.orm.FlyCamera;
@@ -89,10 +100,10 @@ public class FlightControllerTool {
         resHelper=new ResHelper(context);
         onTaskStatusChanged=event;
         mLoadingDialog = new ProgressDialog(context);
-        mLoadingDialog.setMessage("正在上传...");
         mLoadingDialog.setCanceledOnTouchOutside(true);
         mLoadingDialog.setCancelable(true);
         mLoadingDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
     }
 
     public TaskViewModel getCurrentTask(){
@@ -181,9 +192,9 @@ public class FlightControllerTool {
                                         SetHomeLocation(position);
                                     }
                                     updateDroneLocation(position);//更新位置
-                                    if(mFlightController.isConnected()&&mFlightController.getState().isGoingHome()&&currentTask.taskstatus==1){
+                                    /*if(mFlightController.isConnected()&&mFlightController.getState().isGoingHome()&&currentTask.taskstatus==1){
                                         pauseTask();
-                                    }
+                                    }*/
                                     String val= refreshCurrentIndex(position);
                                     if(val!=null){
                                         int index=Integer.parseInt(val);
@@ -237,14 +248,8 @@ public class FlightControllerTool {
                 currentTask.currentStart=index;
                 clog.saveLogInfo("到达点"+index,currentTask.id);
                 SetStartPoint(index);
-                taskManager.SaveTask(currentTask);
                 onTaskStatusChanged.onPointReached(currentTask.compeletePointSize,allPointsInTask.size());
-                mUIHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                });
+                taskManager.SaveTask(currentTask);
             }
         }
     }
@@ -330,7 +335,7 @@ public class FlightControllerTool {
            stopShootPhoto();
            MissionControl.getInstance().stopTimeline();
            onTaskStatusChanged.onPaused();
-           clog.saveLogInfo("任务停止",currentTask.id);
+           clog.saveLogInfo("任务暂停",currentTask.id);
             goHome();
         }
     }
@@ -367,6 +372,36 @@ public class FlightControllerTool {
             return false;
         }
     }
+    public void initTimeline(final MissionControl.Listener listener,final onSrtmMissionCompelete srtmInitListener){
+        clog.saveLogInfo("已完成航点数量"+currentTask.compeletePointSize,currentTask.id);
+        amapHomeLocation=amapTool.get_homePoint();
+        Boolean hover=currentTask.hover==1;
+        allPointsInTask=GetAllPointInTask(hover,currentTask.pointSpace);//生成全部航点
+        List<LatLng> points=GetPagedPoints(currentTask.compeletePointSize,99);//获取要执行的页默认按99分页后期根据限制会产生变化
+        final int size=points.size();
+        LoadSrtmData(points, new onSrtmWaypointInit() {
+            @Override
+            public void onCompelete(WaypointMission mission) {
+                List<TimelineElement> timelineElements=new ArrayList<>();
+                TimelineElement element = TimelineMission.elementFromWaypointMission(mission);
+                DJIError error=mission.checkParameters();
+                if(error!=null){
+                    Common.ShowQMUITipToast(_context,error.toString(), QMUITipDialog.Builder.ICON_TYPE_FAIL,500);
+                    clog.saveLogInfo("检查路点已经存在错误:"+error,currentTask.id);
+                }
+                else{
+                    timelineElements.add(element);
+                    mFlightController.setGoHomeHeightInMeters(currentTask.GoHomeHeight,null);//设置返航高度
+                    if(timelineElements.size()>0){
+                        SetMissionControl(timelineElements,listener);
+                        currentTask.currentEnd=currentTask.currentStart+size-1;
+                        taskManager.SaveTask(currentTask);
+                        srtmInitListener.onCompelete();
+                    }
+                }
+            }
+        });
+    }
     private void SetStartPoint(int i){
         if(allPointsInTask!=null&&allPointsInTask.size()>0){
             if(i>=allPointsInTask.size()){
@@ -389,6 +424,7 @@ public class FlightControllerTool {
         mUIHandler.post(new Runnable() {
             public void run() {
                 if (mLoadingDialog != null) {
+                    mLoadingDialog.setMessage("正在上传...");
                     mLoadingDialog.setMax(max);
                     mLoadingDialog.setProgress(progress);
                 }
@@ -474,7 +510,7 @@ public class FlightControllerTool {
                 .setExitMissionOnRCSignalLostEnabled(false)//如果信号丢失继续执行
                 .finishedAction(WaypointMissionFinishedAction.GO_HOME)//安全起见一定要返航
                 .flightPathMode(
-                        WaypointMissionFlightPathMode.CURVED)
+                        WaypointMissionFlightPathMode.NORMAL)
                 .gotoFirstWaypointMode(
                         WaypointMissionGotoWaypointMode.SAFELY)
                 .headingMode(
@@ -592,6 +628,7 @@ public class FlightControllerTool {
             }
             waypoints.add(waypoint);
         }
+        //if()//勾选贴地飞行则重新全部处理
         waypoints=SetHeightAreaPoints(waypoints,points);
         waypointMissionBuilder.waypointList(waypoints).waypointCount(waypoints.size());
         return waypointMissionBuilder.build();
@@ -837,6 +874,17 @@ public class FlightControllerTool {
                 else{
                     clog.saveLogInfo("初始化航点失败",currentTask.id);
                 }
+                /*if(task.isSrtm==1){
+                    initTimeline(missionListener, new onSrtmMissionCompelete() {
+                        @Override
+                        public void onCompelete() {
+                            startTimeline();//读取完成后开始任务
+                        }
+                    });
+                }
+                else{
+
+                }*/
             }
             return false;
         }
@@ -1125,6 +1173,113 @@ public class FlightControllerTool {
         }
         return 0;
     }
+    private String readToString(String fileName) {
+        String encoding = "UTF-8";
+        File file = new File(fileName);
+        Long filelength = file.length();
+        byte[] filecontent = new byte[filelength.intValue()];
+        try {
+            FileInputStream in = new FileInputStream(file);
+            in.read(filecontent);
+            in.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            return new String(filecontent, encoding);
+        } catch (UnsupportedEncodingException e) {
+            System.err.println("The OS does not support " + encoding);
+            e.printStackTrace();
+            return null;
+        }
+    }
 
+    private interface onSrtmWaypointInit{
+        void onCompelete(WaypointMission mission);
+    }
+    private interface onSrtmMissionCompelete{
+        void onCompelete();
+    }
+    private void LoadSrtmData(List<LatLng> points,final onSrtmWaypointInit onSrtmCompelete){
+        if(currentTask!=null&&currentTask.srtmDataFile!=null&&currentTask.srtmDataFile.length()>0){//存在直接读取
+            String pathFolder= Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "visiontekLogFiles";
+            String pathFile=pathFolder+currentTask.id+"_srtm.txt";
+            File file = new File(pathFile);
+            if(file.exists()){
+                String res=readToString(pathFile);
+                try {
+                    List<SrtmData> srtmData = JSON.parseArray(res,SrtmData.class);
+                    int angle=currentTask.cameradirection==0?90:0;
+                    int yaw=currentTask.airwayangle+angle;//设置偏航角度范围必须是+-180
+                    if(yaw>180){
+                        yaw=yaw-180;
+                    }
+                    WaypointMission mission=initSrtmWarypoint(srtmData,currentTask.speed,currentTask.pointSpace,yaw);
+                    onSrtmCompelete.onCompelete(mission);
+                }
+                catch (Exception e){
+                    Log.i("srtm","序列化失败FlightControllerTool.LoadSrtmData()");
+                }
+            }
+        }
+        else{
+            SrtmElevationTool srtmElevationTool=new SrtmElevationTool(currentTask.id, new SrtmElevationTool.onSrtmDataDownload() {
+                @Override
+                public void onCompelete(List<SrtmData> _srtmData) {
+                    hideProgressDialog();
+                    int angle=currentTask.cameradirection==0?90:0;
+                    int yaw=currentTask.airwayangle+angle;//设置偏航角度范围必须是+-180
+                    if(yaw>180){
+                        yaw=yaw-180;
+                    }
+                    WaypointMission mission=initSrtmWarypoint(_srtmData,currentTask.speed,currentTask.pointSpace,yaw);
+                    onSrtmCompelete.onCompelete(mission);
+                }
+                @Override
+                public void onProgress(int total, int current) {
+                    mLoadingDialog.setMessage("正在下载高程数据...");
+                    mLoadingDialog.setMax(total);
+                    mLoadingDialog.setProgress(current);
+                    if(current==1){
+                        showProgressDialog();
+                    }
+                }
+            });
+            srtmElevationTool.StartDownloadSrtmData(points);//不存在通过网络下载
+        }
+    }
+    private WaypointMission initSrtmWarypoint(List<SrtmData> srtmData,float speed,
+                                              float space,int yaw){
 
+        WaypointMission.Builder waypointMissionBuilder = new WaypointMission.Builder().autoFlightSpeed(speed)
+                .maxFlightSpeed(15f)
+                .setExitMissionOnRCSignalLostEnabled(false)
+                .finishedAction(WaypointMissionFinishedAction.GO_HOME)//安全起见一定要返航
+                .flightPathMode(
+                        WaypointMissionFlightPathMode.NORMAL)
+                .gotoFirstWaypointMode(
+                        WaypointMissionGotoWaypointMode.SAFELY)
+                .headingMode(
+                        WaypointMissionHeadingMode.USING_INITIAL_DIRECTION);
+        List<Waypoint> waypoints =new ArrayList<>();
+        for(int i=0;i<srtmData.size();i++){
+            SrtmData srtm=srtmData.get(i);
+            LatLng taskPoint=new LatLng(srtm.lat,srtm.lon);
+            LocationCoordinate2D  point=MapLocation2FlightLocation(taskPoint);//传入飞机之前要转换
+            //飞行高度=参数计算高度-（起飞点海拔-真实DEM海拔)
+            float altitude=currentTask.BasePlaneHeight-(currentTask.homeASL-(float)srtm.height);
+            Waypoint waypoint=new Waypoint(point.getLatitude(),point.getLongitude(),altitude);
+            waypoint.addAction(new WaypointAction(WaypointActionType.STAY,1000));//必须有此动作防止触发器提前触发
+            if(i==0){//到达第一个点时调整飞行器飞行角度
+                WaypointAction aircraftYawAction=new WaypointAction(WaypointActionType.ROTATE_AIRCRAFT,yaw);
+                waypoint.addAction(aircraftYawAction);
+            }
+            waypoint.shootPhotoDistanceInterval=space;
+            waypoints.add(waypoint);
+        }
+        waypointMissionBuilder.waypointList(waypoints).waypointCount(waypoints.size());
+        return waypointMissionBuilder.build();
+    }
 }

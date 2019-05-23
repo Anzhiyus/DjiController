@@ -51,7 +51,7 @@
             android:value="5fd1f2f548acc66527ea238c" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="352668ee5a1fd294fb5eaa001db67cdd" />
+            android:value="301eb111cdb1a58ab0ebc172e3b47a70" />
         <service android:name="com.amap.api.location.APSService"></service>
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" />
         <!--<service android:name="dji.pilot.flyforbid.FlyforbidUpdateService" />-->
@@ -65,13 +65,13 @@
                 android:name="android.hardware.usb.action.USB_ACCESSORY_ATTACHED"
                 android:resource="@xml/accessory_filter" />
         </activity>
-        <activity
+        <!--<activity
             android:name=".views.CompleteWidgetActivity"
             android:label="Default Widgets"
             android:launchMode="singleTop"
             android:screenOrientation="sensorLandscape"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" />-->
         <!-- DJI SDK -->
         <activity android:name="visiontek.djicontroller.views.MainActivity"
             android:theme="@style/AppTheme"

@@ -36,6 +36,19 @@ import visiontek.djicontroller.models.TaskViewModel;
 import visiontek.djicontroller.orm.FlyAreaPoint;
 
 public class AmapTool {
+    //回传区域被编辑以后的事件监听
+    public interface AreaChangedListener{
+        void onChange();
+    }
+    private AreaChangedListener _listener;
+    public void setAreaChangedListener(AreaChangedListener listener){
+        _listener=listener;
+    }
+    private void onAreaChangedCallback(){
+        if(_listener!=null){
+            _listener.onChange();
+        }
+    }
     private AMap _amap;
     public static final int TOOL_LINE = 0;
     public static final int TOOL_AREA = 1;
@@ -619,7 +632,7 @@ public class AmapTool {
                         polygon.remove(marker);
                     }
                 }
-                if(centerPoints.contains(marker)){//点击的是新增
+                else if(centerPoints.contains(marker)){//点击的是新增
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.corner));
                     markerOptions.draggable(true);
@@ -631,7 +644,7 @@ public class AmapTool {
                     polygon.add(i,newmarker);//点要加载正确的位置
                     marker.remove();
                 }
-                if(okMarker.equals(marker)){
+                else if(okMarker.equals(marker)){
                     CloseTool(TOOL_DRAWAREA);
                 }
                 List<LatLng> list = new ArrayList<LatLng>();
@@ -640,6 +653,7 @@ public class AmapTool {
                 }
                 LoadArea(list);
                 LoadFlyLines(opts.rotate,opts.space);
+                onAreaChangedCallback();
                 return true;
             }
         });
@@ -691,6 +705,7 @@ public class AmapTool {
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 resetCenterMoveMarker(getPointsFromArea());
+                onAreaChangedCallback();
             }
         });
     }
@@ -789,8 +804,8 @@ public class AmapTool {
                 else{//生成航线
                     NewArea(GetFlyLinesAngle(),spacing);
                 }
-                LatLng point=getAreaCenterPosition();
-                moveCamera(point,15);
+                //LatLng point=getAreaCenterPosition();
+                //moveCamera(point,15);
             }
         }
     }

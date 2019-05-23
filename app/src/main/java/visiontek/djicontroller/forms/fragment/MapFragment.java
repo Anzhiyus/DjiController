@@ -42,6 +42,9 @@ public abstract  class MapFragment extends Fragment {//实现在Fragmeng中加�
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(ON_TASK_LOAD);
+        getContext().registerReceiver(mReceiver, filter);
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -55,9 +58,7 @@ public abstract  class MapFragment extends Fragment {//实现在Fragmeng中加�
             mUiSettings.setZoomControlsEnabled(false);
             onMapInit(aMap);//回调传出地图对象
         }
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(ON_TASK_LOAD);
-        getContext().registerReceiver(mReceiver, filter);
+
     }
 
     /**

@@ -54,7 +54,7 @@ public class MainTabs extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setSwipeable(false);
         viewPager.setOffscreenPageLimit(4);//内容过于复杂包括地图和大疆控件 全部缓存防止卡顿和对象销毁造成闪退
-        tabSegment.addTab(new QMUITabSegment.Tab("航线规划 "));
+        tabSegment.addTab(new QMUITabSegment.Tab("任务规划 "));
         //tabSegment.addTab(new QMUITabSegment.Tab("飞行参数"));
         tabSegment.addTab(new QMUITabSegment.Tab("任务执行 "));
         tabSegment.addTab(new QMUITabSegment.Tab("实时图传 "));

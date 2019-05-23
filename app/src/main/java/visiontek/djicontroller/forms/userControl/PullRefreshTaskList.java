@@ -23,7 +23,7 @@ import visiontek.djicontroller.forms.dialogs.TaskInfoDialog;
 public class PullRefreshTaskList extends LinearLayout{
     ImageView addBtn;
     ImageView closeBtn;
-    int visible= View.GONE;
+    int visible= View.GONE;//默认显示
     QMUIPullRefreshLayout mPullRefreshLayout;
     TaskListViewAdapter_new mAdapter;
     ListView mListView;

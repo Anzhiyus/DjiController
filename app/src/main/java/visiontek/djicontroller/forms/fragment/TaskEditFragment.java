@@ -54,6 +54,8 @@ import visiontek.djicontroller.util.Common;
 
 //航线规划Tab
 public class TaskEditFragment extends MapFragment{
+    public static final String ON_EDITAREA_ENABLED= "ON_EDITAREA_ENABLED";
+
     private AMap aMap;
     private AmapTool maptool;
     TaskManager taskManager=null;
@@ -106,6 +108,7 @@ public class TaskEditFragment extends MapFragment{
         areameasure=layout.findViewById(R.id.areameasurebtn);
         switchsatellitebtn=layout.findViewById(R.id.switch_satellite);
         savetaskbtn=layout.findViewById(R.id.savetaskbtn);
+        //savetaskbtn.setVisibility(View.GONE);//暂时隐藏保存按钮当区域改变时，自动保存
         linerotateset=layout.findViewById(R.id.linerotateset);
         countpreviewbtn=layout.findViewById(R.id.countpreviewbtn);
         kmlbtn=layout.findViewById(R.id.kmlbtn);
@@ -122,6 +125,12 @@ public class TaskEditFragment extends MapFragment{
     void onMapInit(AMap map){
         aMap=map;
         maptool=new AmapTool(aMap,getContext());
+        maptool.setAreaChangedListener(new AmapTool.AreaChangedListener() {
+            @Override
+            public void onChange() {
+                savetaskbtn.callOnClick();//当区域改变时自动保存
+            }
+        });
         taskManager=new TaskManager();
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);//普通地图 卫星地图MAP_TYPE_SATELLITE
         aMapLocation();
@@ -162,7 +171,7 @@ public class TaskEditFragment extends MapFragment{
             @Override
             public void onClick(View view) {
                 if(currentTask!=null){
-                    taskManager.SaveTask(currentTask,maptool.getPointsFromArea());
+                    taskManager.SaveTaskAndArea(currentTask,maptool.getPointsFromArea());
                     List<LatLng> area=maptool.getDrawArea();
                     if(area!=null&&area.size()>0){
                         List<HeightAreaPoint> heightarea=new ArrayList<>();
@@ -182,11 +191,13 @@ public class TaskEditFragment extends MapFragment{
                                 taskManager.SaveHeightArea(currentTask.id,heightarea);
                             }
                         }
+                        //maptool.CloseTool(AmapTool.TOOL_DRAWAREA);
                     }
                     Common.ShowQMUITipToast(getContext(),"保存成功", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,1000);
                     Intent intent = new Intent(ON_TASK_LOAD);
                     intent.putExtra("id",currentTask.id);
                     getContext().sendBroadcast(intent);
+
                 }
             }
         });
@@ -243,7 +254,6 @@ public class TaskEditFragment extends MapFragment{
 
             @Override
             public void onItemClick(String taskid) {
-
                 Bundle args=new Bundle();
                 args.putString("taskid",taskid);
                 TaskInfoDialog editdlg=new TaskInfoDialog();
@@ -333,6 +343,7 @@ public class TaskEditFragment extends MapFragment{
         params.width=(int)(width*0.3);
         params.height=(int)(height*0.75);
         tasklist.setLayoutParams(params);
+        tasklist.Toggle();
         ViewGroup.LayoutParams paramscolor= colorPickerView.getLayoutParams();
         paramscolor.height=(int)(height*0.65);
         colorPickerView.setLayoutParams(paramscolor);

@@ -38,15 +38,8 @@ public class TaskManager {
     }
 
     //保存task界面到数据库
-    private void SaveTaskAndArea(FlyTask task,List<LatLng> polygon){
-        //task.airwayangle=airwayangle//_amapTool.GetFlyLinesAngle();//0-180
-        int angle=task.cameradirection==0?90:0;
-        task.yaw=task.airwayangle+angle;//飞行器旋转角度
-        if(task.GoHomeHeight<task.FlyHeight){
-            task.GoHomeHeight=(int)task.FlyHeight;
-        }
-        _dataRepository.saveTask(task);
-        //List<LatLng> area=_amapTool.getPointsFromArea();
+    public void SaveTaskAndArea(TaskViewModel task,List<LatLng> polygon){
+        SaveTask(task);
         List<FlyAreaPoint> points=new ArrayList<>();
         for (int i=0;i<polygon.size();i++) {
             points.add(ConvertLatLng2AreaPoint(polygon.get(i),task.id));
@@ -72,17 +65,20 @@ public class TaskManager {
         }
         return null;
     }
-    //保存task
-    public void SaveTask(TaskViewModel taskViewModel,List<LatLng> polygon){
-        SaveTaskAndArea(taskViewModel,polygon);
+    public FlyTask getTaskEntity(String id){
+        FlyTask task=  _dataRepository.getTask(id);
+        return task;
     }
+    //保存task
     public void SaveTask(TaskViewModel task){
+        FlyTask taskentity=task;
         int angle=task.cameradirection==0?90:0;
-        task.yaw=task.airwayangle+angle;//飞行器旋转角度
-        if(task.GoHomeHeight<task.FlyHeight){
-            task.GoHomeHeight=(int)task.FlyHeight;
+        taskentity.yaw=task.airwayangle+angle;//飞行器旋转角度
+        if(taskentity.GoHomeHeight<task.FlyHeight){
+            taskentity.GoHomeHeight=(int)task.FlyHeight;
         }
-        _dataRepository.saveTask(task);
+        taskentity.FlyHeight=(int)task.FlyHeight;
+        _dataRepository.saveTask(taskentity);
     }
     public void SaveHeightArea(String taskid,List<HeightAreaPoint> list){
         _dataRepository.saveTaskHeightAreaPoints(taskid,list);

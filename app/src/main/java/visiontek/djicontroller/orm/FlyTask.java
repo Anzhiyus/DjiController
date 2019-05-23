@@ -45,13 +45,16 @@ public class FlyTask {
     public int pitch;//云台俯仰角度
     public int yaw;//偏航角度
     public int isThridCamera;//是否第三方相机
-@Generated(hash = 1153981565)
+    public int isSrtm;//是否贴地飞行
+    public String srtmDataFile;//地形文件数据当区域发生变化保存时此字段必须清空并删除地形文件
+@Generated(hash = 1446562163)
 public FlyTask(String id, @NotNull String taskname, Date createtime,
         int compeletePointSize, int currentStart, int currentEnd,
         int taskstatus, String cameraid, int cameradirection, int hover,
         float speed, int FlyHeight, int GoHomeHeight, float adjacentverlapping,
         float parallellapping, int airwayangle, int finishaction, float gsd,
-        int areaASL, int homeASL, int pitch, int yaw, int isThridCamera) {
+        int areaASL, int homeASL, int pitch, int yaw, int isThridCamera,
+        int isSrtm, String srtmDataFile) {
     this.id = id;
     this.taskname = taskname;
     this.createtime = createtime;
@@ -75,6 +78,8 @@ public FlyTask(String id, @NotNull String taskname, Date createtime,
     this.pitch = pitch;
     this.yaw = yaw;
     this.isThridCamera = isThridCamera;
+    this.isSrtm = isSrtm;
+    this.srtmDataFile = srtmDataFile;
 }
 @Generated(hash = 226878336)
 public FlyTask() {
@@ -216,6 +221,18 @@ public int getIsThridCamera() {
 }
 public void setIsThridCamera(int isThridCamera) {
     this.isThridCamera = isThridCamera;
+}
+public int getIsSrtm() {
+    return this.isSrtm;
+}
+public void setIsSrtm(int isSrtm) {
+    this.isSrtm = isSrtm;
+}
+public String getSrtmDataFile() {
+    return this.srtmDataFile;
+}
+public void setSrtmDataFile(String srtmDataFile) {
+    this.srtmDataFile = srtmDataFile;
 }
 
 }

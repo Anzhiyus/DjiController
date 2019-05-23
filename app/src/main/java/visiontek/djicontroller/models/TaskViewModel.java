@@ -14,7 +14,12 @@ public class TaskViewModel extends FlyTask {
     //获取飞行高度
     private float getFlyHeight(FlyTask task,FlyCamera camera){
         if(task!=null) {
-            return getBasePlaneHeight(task, camera) -(task.homeASL-task.areaASL);//飞行实际高度=参数计算高度-（起飞点海拔-基准面海拔）
+            if(task.FlyHeight>0){
+                return task.FlyHeight;
+            }
+            else{
+                return getBasePlaneHeight(task, camera) -(task.homeASL-task.areaASL);//飞行实际高度=参数计算高度-（起飞点海拔-基准面海拔）
+            }
         }
         else
             return 0;
@@ -65,7 +70,7 @@ public class TaskViewModel extends FlyTask {
     public TaskViewModel(FlyTask task,FlyCamera camera){
         this.BasePlaneHeight=getBasePlaneHeight(task,camera);
         this.cameraInfo=camera;
-        this.FlyHeight=getFlyHeight(task,camera);
+        this.FlyHeight=this.FlyHeight==0?getFlyHeight(task,camera):this.FlyHeight;
         this.GoHomeHeight=task.GoHomeHeight;
         this.lineSpace=getLineSpace(task,camera);
         this.pointSpace=getPointSpace(task,camera);
@@ -90,6 +95,7 @@ public class TaskViewModel extends FlyTask {
         this.isThridCamera=task.isThridCamera;
         this.currentStart=task.currentStart;
         this.currentEnd=task.currentEnd;
-
+        this.isSrtm=task.isSrtm;
+        this.srtmDataFile=task.srtmDataFile;
     }
 }
