@@ -17,3 +17,8 @@
 /*测区局部增加变高区域
 
 /*任务状态持久化
+
+
+![界面UI1](https://github.com/luoyuzhao/DjiController/blob/master/Screenshot_01.png)
+
+![界面UI2](https://github.com/luoyuzhao/DjiController/blob/master/Screenshot_02.png)
