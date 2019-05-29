@@ -18,6 +18,8 @@
 
 /*任务状态持久化
 
+/*根据飞机实时位置自行实现状态更新，不依赖触发器（实测在丢失信号时，触发器会无效）
+
 
 ![界面UI1](https://github.com/luoyuzhao/DjiController/blob/master/Screenshot_01.png)
 
