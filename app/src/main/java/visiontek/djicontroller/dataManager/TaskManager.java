@@ -83,4 +83,7 @@ public class TaskManager {
     public void SaveHeightArea(String taskid,List<HeightAreaPoint> list){
         _dataRepository.saveTaskHeightAreaPoints(taskid,list);
     }
+    public void clearTaskHeightArea(String taskid){
+        _dataRepository.clearTaskHeightArea(taskid);
+    }
 }

@@ -539,6 +539,11 @@ public class AmapTool {
             opts.polygon=list;
             flylines =_amap.addPolyline(new PolylineOptions().addAll(cpRPA.setOptions(opts)).width(2).color(Color.GREEN));//创建航线
             flylines.setZIndex(10);
+            List<LatLng> pnts= flylines.getPoints();
+            if(!pnts.isEmpty()){
+                setStartPoint(pnts.get(0));
+                setEndPoint(pnts.get(pnts.size()-1));
+            }
         }
     }
 

@@ -154,18 +154,6 @@ public class FlightControllerTool {
                     mFlightController = ((Aircraft) product).getFlightController();
                     remoteController=((Aircraft) product).getRemoteController();
                     setAircraftMappingStyle(0);//默认重置为日本手
-                    Battery battery=product.getBattery();
-                    if(battery!=null){
-                        battery.setStateCallback(new BatteryState.Callback() {
-                            @Override
-                            public void onUpdate(BatteryState djiBatteryState) {
-                                int val= djiBatteryState.getChargeRemainingInPercent();
-                                if(val<=30){//电池低于30直接返航
-                                    pauseTask();
-                                }
-                            }
-                        });
-                    }
                 }
             }
             if (mFlightController != null) {
@@ -192,8 +180,19 @@ public class FlightControllerTool {
                                         SetHomeLocation(position);
                                     }
                                     updateDroneLocation(position);//更新位置
-                                    /*if(mFlightController.isConnected()&&mFlightController.getState().isGoingHome()&&currentTask.taskstatus==1){
-                                        pauseTask();
+
+                                    /*Battery battery=product.getBattery();
+                                    if(battery!=null){
+                                        battery.setStateCallback(new BatteryState.Callback() {
+                                            @Override
+                                            public void onUpdate(BatteryState djiBatteryState) {
+                                                int val= djiBatteryState.getChargeRemainingInPercent();
+                                                if(val<=30){//电池低于30直接返航坑B 没到30%也返航
+                                                    pauseTask();
+                                                    clog.saveLogInfo("低电量30%返航",currentTask.id);
+                                                }
+                                            }
+                                        });
                                     }*/
                                     String val= refreshCurrentIndex(position);
                                     if(val!=null){
@@ -336,7 +335,7 @@ public class FlightControllerTool {
            MissionControl.getInstance().stopTimeline();
            onTaskStatusChanged.onPaused();
            clog.saveLogInfo("任务暂停",currentTask.id);
-            goHome();
+           goHome();
         }
     }
     //初始化航点

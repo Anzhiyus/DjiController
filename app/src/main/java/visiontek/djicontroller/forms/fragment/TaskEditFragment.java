@@ -385,6 +385,9 @@ public class TaskEditFragment extends MapFragment{
                     }
                     else{
                         maptool.ClearDrawArea();
+                        if(currentTask!=null&&currentTask.id!=null){
+                            taskManager.clearTaskHeightArea(currentTask.id);
+                        }
                     }
                 }
             });

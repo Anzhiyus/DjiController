@@ -114,8 +114,21 @@ public class DataRepository {
         });
         daoSession.clear();
     }
+    public void clearTaskHeightArea(String taskId){
+        final HeightAreaPointDao dao=daoSession.getHeightAreaPointDao();
+        final List<HeightAreaPoint> exists=getHeightAreaPoint(taskId);
+        daoSession.runInTx(new Runnable() {
+            @Override
+            public void run() {
+                if(exists.size()>0){
+                    dao.deleteInTx(exists);
+                }
+            }
+        });
+        daoSession.clear();
+    }
     public void saveTaskHeightAreaPoints(String taskId, final List<HeightAreaPoint> list){
-        if(list == null || list.isEmpty()){
+        if(list==null){
             return;
         }
         final HeightAreaPointDao dao=daoSession.getHeightAreaPointDao();
@@ -126,7 +139,7 @@ public class DataRepository {
                 if(exists.size()>0){
                     dao.deleteInTx(exists);
                 }
-                if(list.size()>0){
+                if(!list.isEmpty()){
                     dao.insertInTx(list);
                 }
             }
