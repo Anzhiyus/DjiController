@@ -264,7 +264,7 @@ public class TaskInfoDialog extends DialogFragment {
                     String height=flyHeight.getText().toString();
                     if(checkTask(flyTaskEntity)){
                         flyTaskEntity.FlyHeight=String2Int(height);//可以手动指定高度
-                        if(flyTaskEntity.GoHomeHeight==0){
+                        if(flyTaskEntity.GoHomeHeight==0||flyTaskEntity.GoHomeHeight>500){
                             flyTaskEntity.GoHomeHeight=(int)flyTaskEntity.FlyHeight;
                         }
                         TaskViewModel taskViewModel=new TaskViewModel(flyTaskEntity,camera);

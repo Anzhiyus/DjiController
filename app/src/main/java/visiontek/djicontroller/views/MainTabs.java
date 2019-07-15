@@ -1,30 +1,21 @@
 package visiontek.djicontroller.views;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.DragEvent;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUIViewPager;
-import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.forms.fragment.FPVFragment;
-import visiontek.djicontroller.forms.fragment.FlyOptionsFragment;
 import visiontek.djicontroller.forms.fragment.TaskControlFragment;
 import visiontek.djicontroller.forms.fragment.TaskEditFragment;
 
@@ -42,7 +33,6 @@ public class MainTabs extends AppCompatActivity {
 
         final List<Fragment> fragments= new ArrayList<>();
         TaskEditFragment tab1=new TaskEditFragment();
-        FlyOptionsFragment tab2=new FlyOptionsFragment();
         TaskControlFragment tab3=new TaskControlFragment();
         FPVFragment tab4=new FPVFragment();
         fragments.add(tab1);

@@ -184,16 +184,13 @@ public class TaskEditFragment extends MapFragment{
                             int height=heightarea.get(0).height;
                             float flyheight=currentTask.FlyHeight;
                             float distance=Math.abs(height-flyheight);
-                            if(distance<1){//变高低于1米无法执行航点
-                                Common.ShowQMUITipToast(getContext(),"保存成功,但变高区域与原高度差过低将不被保存", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,2000);
-                            }
-                            else{
+                            if(distance>1){//变高低于1米无法执行航点
                                 taskManager.SaveHeightArea(currentTask.id,heightarea);
                             }
                         }
                         //maptool.CloseTool(AmapTool.TOOL_DRAWAREA);
                     }
-                    Common.ShowQMUITipToast(getContext(),"保存成功", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,1000);
+                    //Common.ShowQMUITipToast(getContext(),"保存成功", QMUITipDialog.Builder.ICON_TYPE_SUCCESS,1000);
                     Intent intent = new Intent(ON_TASK_LOAD);
                     intent.putExtra("id",currentTask.id);
                     getContext().sendBroadcast(intent);
