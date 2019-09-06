@@ -718,6 +718,9 @@ public class AmapTool {
         if(userPosition!=null)
         userPosition.setDraggable(bool);
     }
+    public AMap get_amap(){
+        return _amap;
+    }
     //获取航线最优角度
     private int GetFirstBoundRotate(){
         //arctan[(y2-y1)/(x2-x1)]已知两点求角度

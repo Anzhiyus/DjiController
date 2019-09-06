@@ -8,8 +8,7 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
-
-import com.alibaba.fastjson.JSON;
+import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
@@ -106,6 +105,7 @@ public class FlightControllerTool {
 
     }
 
+
     public TaskViewModel getCurrentTask(){
         return currentTask;
     }
@@ -172,6 +172,7 @@ public class FlightControllerTool {
                             public void onUpdate(FlightControllerState djiFlightControllerCurrentState) {
                                 double droneLocationLat = djiFlightControllerCurrentState.getAircraftLocation().getLatitude();
                                 double droneLocationLng = djiFlightControllerCurrentState.getAircraftLocation().getLongitude();
+                                double yaw=djiFlightControllerCurrentState.getAttitude().yaw;
                                 LocationCoordinate2D position = new LocationCoordinate2D(droneLocationLat, droneLocationLng);//获取飞机的实时位置
                                 if(checkLocation(position.getLatitude(),position.getLongitude())){
                                     flightposition=position;
@@ -179,7 +180,7 @@ public class FlightControllerTool {
                                         //如果起始点未设置则默认当前的位置为起始点(理论上和高德地图定位设置的起飞点相同实际有偏差)
                                         SetHomeLocation(position);
                                     }
-                                    updateDroneLocation(position);//更新位置
+                                    updateDroneLocation(position,(float)yaw);//更新位置
 
                                     /*Battery battery=product.getBattery();
                                     if(battery!=null){
@@ -257,7 +258,7 @@ public class FlightControllerTool {
     }
     private Marker flightMarker;//飞行器在地图上的标注
     //飞机位置产生变化时更新飞机位置
-    private void updateDroneLocation(final LocationCoordinate2D flightLocation){
+    private void updateDroneLocation(final LocationCoordinate2D flightLocation,final float yaw){
         amapHomeLocation=amapTool.get_homePoint();
         if(amapHomeLocation!=null&&flightLocation!=null&&homeLocation!=null){
             final LatLng pos = FlightLocation2MapLocation(flightLocation);
@@ -271,8 +272,15 @@ public class FlightControllerTool {
                         else{
                             flightMarker=amapTool.AddPoint(R.drawable.aircraft,pos,false,null,null,0.5f,0.5f);
                         }
-                        float yaw= (float)mFlightController.getState().getAttitude().yaw;
-                        flightMarker.setRotateAngle(-yaw);//设置飞行器方向
+                        float bearing= amapTool.get_amap().getCameraPosition().bearing;
+                        float rotate=-yaw+bearing;
+                        if(rotate>180){
+                            rotate=rotate-360;
+                        }
+                        if(rotate<-180){
+                            rotate=rotate+360;
+                        }
+                        flightMarker.setRotateAngle(rotate);//设置飞行器方向*/
                     }
                 }
             });
@@ -370,36 +378,6 @@ public class FlightControllerTool {
         else{
             return false;
         }
-    }
-    public void initTimeline(final MissionControl.Listener listener,final onSrtmMissionCompelete srtmInitListener){
-        clog.saveLogInfo("已完成航点数量"+currentTask.compeletePointSize,currentTask.id);
-        amapHomeLocation=amapTool.get_homePoint();
-        Boolean hover=currentTask.hover==1;
-        allPointsInTask=GetAllPointInTask(hover,currentTask.pointSpace);//生成全部航点
-        List<LatLng> points=GetPagedPoints(currentTask.compeletePointSize,99);//获取要执行的页默认按99分页后期根据限制会产生变化
-        final int size=points.size();
-        LoadSrtmData(points, new onSrtmWaypointInit() {
-            @Override
-            public void onCompelete(WaypointMission mission) {
-                List<TimelineElement> timelineElements=new ArrayList<>();
-                TimelineElement element = TimelineMission.elementFromWaypointMission(mission);
-                DJIError error=mission.checkParameters();
-                if(error!=null){
-                    Common.ShowQMUITipToast(_context,error.toString(), QMUITipDialog.Builder.ICON_TYPE_FAIL,500);
-                    clog.saveLogInfo("检查路点已经存在错误:"+error,currentTask.id);
-                }
-                else{
-                    timelineElements.add(element);
-                    mFlightController.setGoHomeHeightInMeters(currentTask.GoHomeHeight,null);//设置返航高度
-                    if(timelineElements.size()>0){
-                        SetMissionControl(timelineElements,listener);
-                        currentTask.currentEnd=currentTask.currentStart+size-1;
-                        taskManager.SaveTask(currentTask);
-                        srtmInitListener.onCompelete();
-                    }
-                }
-            }
-        });
     }
     private void SetStartPoint(int i){
         if(allPointsInTask!=null&&allPointsInTask.size()>0){
@@ -1200,54 +1178,6 @@ public class FlightControllerTool {
     }
     private interface onSrtmMissionCompelete{
         void onCompelete();
-    }
-    private void LoadSrtmData(List<LatLng> points,final onSrtmWaypointInit onSrtmCompelete){
-        if(currentTask!=null&&currentTask.srtmDataFile!=null&&currentTask.srtmDataFile.length()>0){//存在直接读取
-            String pathFolder= Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "visiontekLogFiles";
-            String pathFile=pathFolder+currentTask.id+"_srtm.txt";
-            File file = new File(pathFile);
-            if(file.exists()){
-                String res=readToString(pathFile);
-                try {
-                    List<SrtmData> srtmData = JSON.parseArray(res,SrtmData.class);
-                    int angle=currentTask.cameradirection==0?90:0;
-                    int yaw=currentTask.airwayangle+angle;//设置偏航角度范围必须是+-180
-                    if(yaw>180){
-                        yaw=yaw-180;
-                    }
-                    WaypointMission mission=initSrtmWarypoint(srtmData,currentTask.speed,currentTask.pointSpace,yaw);
-                    onSrtmCompelete.onCompelete(mission);
-                }
-                catch (Exception e){
-                    Log.i("srtm","序列化失败FlightControllerTool.LoadSrtmData()");
-                }
-            }
-        }
-        else{
-            SrtmElevationTool srtmElevationTool=new SrtmElevationTool(currentTask.id, new SrtmElevationTool.onSrtmDataDownload() {
-                @Override
-                public void onCompelete(List<SrtmData> _srtmData) {
-                    hideProgressDialog();
-                    int angle=currentTask.cameradirection==0?90:0;
-                    int yaw=currentTask.airwayangle+angle;//设置偏航角度范围必须是+-180
-                    if(yaw>180){
-                        yaw=yaw-180;
-                    }
-                    WaypointMission mission=initSrtmWarypoint(_srtmData,currentTask.speed,currentTask.pointSpace,yaw);
-                    onSrtmCompelete.onCompelete(mission);
-                }
-                @Override
-                public void onProgress(int total, int current) {
-                    mLoadingDialog.setMessage("正在下载高程数据...");
-                    mLoadingDialog.setMax(total);
-                    mLoadingDialog.setProgress(current);
-                    if(current==1){
-                        showProgressDialog();
-                    }
-                }
-            });
-            srtmElevationTool.StartDownloadSrtmData(points);//不存在通过网络下载
-        }
     }
     private WaypointMission initSrtmWarypoint(List<SrtmData> srtmData,float speed,
                                               float space,int yaw){
