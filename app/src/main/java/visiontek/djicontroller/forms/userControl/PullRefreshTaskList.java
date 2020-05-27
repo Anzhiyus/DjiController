@@ -17,7 +17,7 @@ import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.dataManager.TaskManager;
-import visiontek.djicontroller.forms.Adapter.TaskListViewAdapter_new;
+import visiontek.djicontroller.forms.Adapter.TaskListViewAdapter;
 import visiontek.djicontroller.forms.dialogs.TaskInfoDialog;
 
 public class PullRefreshTaskList extends LinearLayout{
@@ -25,7 +25,7 @@ public class PullRefreshTaskList extends LinearLayout{
     ImageView closeBtn;
     int visible= View.GONE;//默认显示
     QMUIPullRefreshLayout mPullRefreshLayout;
-    TaskListViewAdapter_new mAdapter;
+    TaskListViewAdapter mAdapter;
     ListView mListView;
     private TaskManager taskManager=new TaskManager();
     private Context _context;
@@ -67,8 +67,8 @@ public class PullRefreshTaskList extends LinearLayout{
             QMUIViewHelper.slideOut(this, 300, null, true, QMUIDirection.LEFT_TO_RIGHT);
         }
     }
-    private TaskListViewAdapter_new.onClickEvent _lisener;
-    public void SetListViewEventLisener(TaskListViewAdapter_new.onClickEvent lisener){
+    private TaskListViewAdapter.onClickEvent _lisener;
+    public void SetListViewEventLisener(TaskListViewAdapter.onClickEvent lisener){
         _lisener=lisener;
         initData();
     }
@@ -77,7 +77,7 @@ public class PullRefreshTaskList extends LinearLayout{
         mAdapter.notifyDataSetChanged();
     }
     private void initData() {//刷新数据
-        mAdapter=new TaskListViewAdapter_new(_context,_lisener);
+        mAdapter=new TaskListViewAdapter(_context,_lisener);
         mAdapter.SetData(taskManager.getTaskList());
         mListView.setAdapter(mAdapter);
         mPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {

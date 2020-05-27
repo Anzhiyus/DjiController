@@ -12,12 +12,12 @@ import java.util.List;
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.orm.FlyCamera;
 
-public class CameraListViewAdapter_new extends BaseAdapter {
+public class CameraListViewAdapter extends BaseAdapter {
     private Context context;
     public List<FlyCamera> _data;
     private onClickEvent _event;
 
-    public CameraListViewAdapter_new(Context context,onClickEvent event){
+    public CameraListViewAdapter(Context context,onClickEvent event){
         this.context=context;
         this._event=event;
     }

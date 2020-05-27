@@ -1,14 +1,8 @@
 package visiontek.djicontroller.forms.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,21 +26,19 @@ import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.dataManager.TaskManager;
 
-import visiontek.djicontroller.forms.Adapter.TaskListViewAdapter_new;
+import visiontek.djicontroller.forms.Adapter.TaskListViewAdapter;
 import visiontek.djicontroller.forms.dialogs.CalculateHightDialog;
 import visiontek.djicontroller.forms.dialogs.KMLLoadDialog;
 import visiontek.djicontroller.forms.dialogs.TaskInfoDialog;
 import visiontek.djicontroller.forms.userControl.ColorPickerView;
 import visiontek.djicontroller.forms.userControl.PullRefreshTaskList;
 import visiontek.djicontroller.models.TaskViewModel;
-import visiontek.djicontroller.models.kml.Color;
 import visiontek.djicontroller.orm.FlyAreaPoint;
 import visiontek.djicontroller.orm.HeightAreaPoint;
 import visiontek.djicontroller.util.AmapTool;
@@ -211,7 +203,7 @@ public class TaskEditFragment extends MapFragment{
                 calculateDialog.show(getFragmentManager(),"caculate");
             }
         });
-        tasklist.SetListViewEventLisener(new TaskListViewAdapter_new.onClickEvent() {
+        tasklist.SetListViewEventLisener(new TaskListViewAdapter.onClickEvent() {
             @Override
             public void onLoadClick(String taskid) {
                 Intent intent = new Intent(ON_TASK_LOAD);

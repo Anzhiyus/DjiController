@@ -1,6 +1,5 @@
 package visiontek.djicontroller.forms.dialogs;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -11,25 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import visiontek.djicontroller.R;
 import visiontek.djicontroller.dataManager.CameraManager;
-import visiontek.djicontroller.dataManager.TaskManager;
-import visiontek.djicontroller.forms.Adapter.CameraListViewAdapter_new;
-import visiontek.djicontroller.util.Common;
+import visiontek.djicontroller.forms.Adapter.CameraListViewAdapter;
 
 public class CameraListDialog extends DialogFragment {
     private LinearLayout dialog;
     ImageView addBtn;
     ImageView closeBtn;
     QMUIPullRefreshLayout mPullRefreshLayout;
-    CameraListViewAdapter_new mAdapter;
+    CameraListViewAdapter mAdapter;
     ListView mListView;
     CameraManager manager=new CameraManager();
     @Override
@@ -70,7 +64,7 @@ public class CameraListDialog extends DialogFragment {
         mListView=dialog.findViewById(R.id.listview);
         mPullRefreshLayout=dialog.findViewById(R.id.pull_to_refresh);
     }
-    private CameraListViewAdapter_new.onClickEvent lisener=new CameraListViewAdapter_new.onClickEvent() {
+    private CameraListViewAdapter.onClickEvent lisener=new CameraListViewAdapter.onClickEvent() {
         @Override
         public void onRemoveClick(String id) {
             final String cameraid=id;
@@ -105,7 +99,7 @@ public class CameraListDialog extends DialogFragment {
         }
     };
     private void initData() {//刷新数据
-        mAdapter=new CameraListViewAdapter_new(getContext(),lisener);
+        mAdapter=new CameraListViewAdapter(getContext(),lisener);
         mAdapter.SetData(manager.getCameraList());
         mListView.setAdapter(mAdapter);
         mPullRefreshLayout.setOnPullListener(new QMUIPullRefreshLayout.OnPullListener() {

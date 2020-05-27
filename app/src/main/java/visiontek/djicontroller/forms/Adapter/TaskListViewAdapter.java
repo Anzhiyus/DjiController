@@ -13,13 +13,13 @@ import visiontek.djicontroller.R;
 
 import visiontek.djicontroller.orm.FlyTask;
 
-public class TaskListViewAdapter_new extends BaseAdapter {
+public class TaskListViewAdapter extends BaseAdapter {
     //private List<String> list;
     private Context context;
     public List<FlyTask> _data;
     private onClickEvent _event;
 
-    public TaskListViewAdapter_new(Context context,onClickEvent event){
+    public TaskListViewAdapter(Context context,onClickEvent event){
         this.context=context;
         this._event=event;
     }
