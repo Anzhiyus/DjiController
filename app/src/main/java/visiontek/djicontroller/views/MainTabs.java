@@ -48,7 +48,7 @@ public class MainTabs extends AppCompatActivity {
         //tabSegment.addTab(new QMUITabSegment.Tab("飞行参数"));
         tabSegment.addTab(new QMUITabSegment.Tab("任务执行 "));
         tabSegment.addTab(new QMUITabSegment.Tab("实时图传 "));
-        tabSegment.setDefaultNormalColor(getResources().getColor(R.color.white,null));
+        //tabSegment.setDefaultNormalColor(getResources().getColor(R.color.white,null));
         int space = QMUIDisplayHelper.dp2px(this, 16);
         tabSegment.setHasIndicator(true);
 
