@@ -1,5 +1,8 @@
 # DjiController 2.0
 
+因部分原因，暂不开源3D版本，本版本为2D基础版本，仅供参考，该飞行策略会导致续航时间缩短，有待优化
+3D版本请参照https://github.com/luoyuzhao/amap3dDrawingExtension 自行扩展。
+
 #contact-email:290330505@qq.com
 
 ！！本软件不保证飞行安全，使用所产生一切后果自行承担！！
