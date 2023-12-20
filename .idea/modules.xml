@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DjiController.iml" filepath="$PROJECT_DIR$/DjiController.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DjiController.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DjiController.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DjiController.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DjiController.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DjiController.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DjiController.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DjiController.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DjiController.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

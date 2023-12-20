@@ -37,12 +37,12 @@ public class DJIApplication extends Application {
         return instance;
     }
 
-    @Override
-    protected void attachBaseContext(Context paramContext) {
-        super.attachBaseContext(paramContext);
-        Helper.install(DJIApplication.this);
-        MultiDex.install(this);//geeendao在部分版本下可能导致闪退 此行必须
-    }
+//    @Override
+//    protected void attachBaseContext(Context paramContext) {
+//        super.attachBaseContext(paramContext);
+//        Helper.install(DJIApplication.this);
+//        MultiDex.install(this);//geeendao在部分版本下可能导致闪退 此行必须
+//    }
     @Override
     public void onCreate() {
         super.onCreate();

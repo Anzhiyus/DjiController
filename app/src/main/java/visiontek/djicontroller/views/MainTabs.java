@@ -37,8 +37,8 @@ public class MainTabs extends AppCompatActivity {
         FPVFragment tab4=new FPVFragment();
         fragments.add(tab1);
         //fragments.add(tab2);
-        fragments.add(tab3);
-        fragments.add(tab4);
+//        fragments.add(tab3);
+//        fragments.add(tab4);
 
         BaseFragmentPagerAdapter adapter = new BaseFragmentPagerAdapter(getSupportFragmentManager(), fragments);
         viewPager.setAdapter(adapter);
@@ -46,8 +46,8 @@ public class MainTabs extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(4);//内容过于复杂包括地图和大疆控件 全部缓存防止卡顿和对象销毁造成闪退
         tabSegment.addTab(new QMUITabSegment.Tab("任务规划 "));
         //tabSegment.addTab(new QMUITabSegment.Tab("飞行参数"));
-        tabSegment.addTab(new QMUITabSegment.Tab("任务执行 "));
-        tabSegment.addTab(new QMUITabSegment.Tab("实时图传 "));
+//        tabSegment.addTab(new QMUITabSegment.Tab("任务执行 "));
+//        tabSegment.addTab(new QMUITabSegment.Tab("实时图传 "));
         //tabSegment.setDefaultNormalColor(getResources().getColor(R.color.white,null));
         int space = QMUIDisplayHelper.dp2px(this, 16);
         tabSegment.setHasIndicator(true);

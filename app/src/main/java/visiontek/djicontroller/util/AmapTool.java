@@ -365,7 +365,12 @@ public class AmapTool {
     private Marker userPosition;//手机所在位置标注
     public void StartLocation(final LocationListener listener){
         _homePoint=null;
-        mlocationClient = new AMapLocationClient(_context);
+        try {
+            mlocationClient = new AMapLocationClient(_context);
+        } catch (Exception e) {
+            // 处理异常情况，例如打印异常信息或进行其他操作
+            e.printStackTrace();
+        }
         //初始化定位参数
         mLocationOption = new AMapLocationClientOption();
         //设置定位监听

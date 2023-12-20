@@ -4,6 +4,13 @@ buildscript {
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
         google()
         jcenter()
+        // 改为阿里云的镜像地址
+        maven { setUrl("https://maven.aliyun.com/repository/central") }
+        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+        maven { setUrl("https://maven.aliyun.com/repository/google") }
+        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { setUrl("https://maven.aliyun.com/repository/public") }
+        maven { setUrl("https://jitpack.io") }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.4.1'
@@ -18,6 +25,13 @@ allprojects {
         //mavenCentral()
         google()
         jcenter()
+        // 改为阿里云的镜像地址
+        maven { setUrl("https://maven.aliyun.com/repository/central") }
+        maven { setUrl("https://maven.aliyun.com/repository/jcenter") }
+        maven { setUrl("https://maven.aliyun.com/repository/google") }
+        maven { setUrl("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { setUrl("https://maven.aliyun.com/repository/public") }
+        maven { setUrl("https://jitpack.io") }
     }
 }
 

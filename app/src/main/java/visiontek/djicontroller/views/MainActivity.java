@@ -13,6 +13,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +30,9 @@ import dji.sdk.products.Aircraft;
 import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
 import visiontek.djicontroller.R;
+import visiontek.djicontroller.forms.fragment.TaskEditFragment;
 
+import android.view.View.OnClickListener;
 public class MainActivity extends Activity {
     private TextView mTextConnectionStatus;
     private static final String TAG = MainActivity.class.getName();
@@ -56,11 +60,28 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mTextConnectionStatus=(TextView)findViewById(R.id.mTextConnectionStatus);
-        checkAndRequestPermissions();
-        setContentView(R.layout.activity_main);
-        mHandler = new Handler(Looper.getMainLooper());
+        ImageView btnAppActivationStatus =(ImageView) findViewById(R.id.img_nav);
+        btnAppActivationStatus.setOnClickListener(new initImageView());
+
+//        setContentView(R.layout.activity_main);
+//        mTextConnectionStatus=(TextView)findViewById(R.id.mTextConnectionStatus);
+//        checkAndRequestPermissions();
+//        setContentView(R.layout.activity_main);
+//        mHandler = new Handler(Looper.getMainLooper());
     }
+
+    // 获得“获取应用激活状态”按钮实例对象
+
+    // 对“获取应用激活状态”按钮增加监听器
+    class initImageView implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MainActivity.this, MainTabs.class);
+//            Intent intent = new Intent(MainActivity.this, TaskEditFragment.class);
+            startActivity(intent);
+        }
+    }
+
     private void checkAndRequestPermissions() {
         // Check for permissions
         for (String eachPermission : REQUIRED_PERMISSION_LIST) {

@@ -125,7 +125,7 @@ public class TaskEditFragment extends MapFragment{
         });
         taskManager=new TaskManager();
         aMap.setMapType(AMap.MAP_TYPE_NORMAL);//普通地图 卫星地图MAP_TYPE_SATELLITE
-        aMapLocation();
+//        aMapLocation();
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -277,7 +277,7 @@ public class TaskEditFragment extends MapFragment{
         locationbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                aMapLocation();
+//                aMapLocation();
             }
         });
         linemeasure.setOnClickListener(new View.OnClickListener() {
