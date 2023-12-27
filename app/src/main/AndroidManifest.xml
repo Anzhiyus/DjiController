@@ -51,7 +51,7 @@
             android:value="5fd1f2f548acc66527ea238c" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="301eb111cdb1a58ab0ebc172e3b47a70" />
+            android:value="f1136b4c898979a9ec0ff918575a4ffb" />
         <service android:name="com.amap.api.location.APSService"></service>
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" />
         <!--<service android:name="dji.pilot.flyforbid.FlyforbidUpdateService" />-->

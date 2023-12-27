@@ -110,6 +110,8 @@ public class CalculateHightDialog extends DialogFragment{
     }*/
     //获取相机列表
     private void getCameraSpinner() {
+//        FlyCamera camera= cameraList.get(index);//new FlyCamera("id",28,"Mavic2",100,11,1,8,5472,3648,30,"JPEG");//= cameraList.get(index);
+        //allCameras.add(camera);
         allCameras=mCameraManager.getCameraList();
         List<String> cameraList=new ArrayList();
         for (int i = 0; i < allCameras.size(); i++) {

@@ -19,42 +19,43 @@
         android:layout_height="25dp"
         android:background="@color/dark_gray" android:layout_marginTop="50dp"
         android:orientation="horizontal">
-        <dji.ux.widget.PreFlightStatusWidget
-            android:layout_width="238dp"
-            android:layout_height="25dp"/>
-        <dji.ux.widget.FlightModeWidget
-            android:layout_width="103dp"
-            android:layout_height="22dp"/>
+<!--        <dji.ux.widget.PreFlightStatusWidget-->
+<!--            android:layout_width="238dp"-->
+<!--            android:layout_height="25dp"/>-->
+<!--        <dji.ux.widget.FlightModeWidget-->
+<!--            android:layout_width="103dp"-->
+<!--            android:layout_height="22dp"/>-->
 
-        <dji.ux.widget.GPSSignalWidget
-            android:layout_width="44dp"
-            android:layout_height="22dp"/>
+<!--        <dji.ux.widget.GPSSignalWidget-->
+<!--            android:layout_width="44dp"-->
+<!--            android:layout_height="22dp"/>-->
 
-        <dji.ux.widget.VisionWidget
-            android:layout_width="22dp"
-            android:layout_height="22dp"/>
+<!--        <dji.ux.widget.VisionWidget-->
+<!--            android:layout_width="22dp"-->
+<!--            android:layout_height="22dp"/>-->
 
-        <dji.ux.widget.RemoteControlSignalWidget
-            android:layout_width="38dp"
-            android:layout_height="22dp"/>
+<!--        <dji.ux.widget.RemoteControlSignalWidget-->
+<!--            android:layout_width="38dp"-->
+<!--            android:layout_height="22dp"/>-->
 
-        <dji.ux.widget.VideoSignalWidget
-            android:layout_width="38dp"
-            android:layout_height="22dp"/>
+<!--        <dji.ux.widget.VideoSignalWidget-->
+<!--            android:layout_width="38dp"-->
+<!--            android:layout_height="22dp"/>-->
 
-        <dji.ux.widget.WiFiSignalWidget
-            android:layout_width="22dp"
-            android:layout_height="20dp"/>
+<!--        <dji.ux.widget.WiFiSignalWidget-->
+<!--            android:layout_width="22dp"-->
+<!--            android:layout_height="20dp"/>-->
 
-        <dji.ux.widget.BatteryWidget
-            android:layout_width="96dp"
-            android:layout_height="22dp"
-            custom:excludeView="singleVoltage"/>
+<!--        <dji.ux.widget.BatteryWidget-->
+<!--            android:layout_width="96dp"-->
+<!--            android:layout_height="22dp"-->
+<!--            custom:excludeView="singleVoltage"/>-->
 
-        <dji.ux.widget.ConnectionWidget
-            android:layout_marginTop="3dp"
-            android:layout_width="18dp"
-            android:layout_height="18dp"/>
+<!--        <dji.ux.widget.ConnectionWidget-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            android:layout_width="18dp"-->
+<!--            android:layout_height="18dp"/>-->
+<!--        // 2023.12.25 AZY-->
     </LinearLayout>
     <include layout="@layout/taskinfo" android:id="@+id/taskinfo" android:layout_margin="3dp"
         android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -100,12 +101,13 @@
     </LinearLayout>
     -->
     <!--时间线进度-->
-    <dji.ux.widget.RemainingFlightTimeWidget
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="18dp"
-        android:layout_width="match_parent"
-        android:background="@color/transparent"
-        android:layout_height="20dp"/>
+<!--    <dji.ux.widget.RemainingFlightTimeWidget-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:background="@color/transparent"-->
+<!--        android:layout_height="20dp"/>-->
+    <!--        // 2023.12.25 AZY-->
     <!--Take off and return home buttons on left -->
     <LinearLayout
         android:id="@+id/TakeOffReturnPanel"
@@ -119,16 +121,17 @@
             android:theme="@style/WhiteText" android:popupTheme="@style/BlackText"
             android:layout_width="wrap_content"
             android:layout_height="40dp" android:entries="@array/spinner_aircraft_mapping"></Spinner>
-        <dji.ux.widget.TakeOffWidget
-            android:layout_marginTop="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"/>
+<!--        <dji.ux.widget.TakeOffWidget-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_gravity="center_horizontal"/>-->
 
-        <dji.ux.widget.ReturnHomeWidget
-            android:layout_width="40dp"
-            android:layout_height="40dp" android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"/>
+<!--        <dji.ux.widget.ReturnHomeWidget-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp" android:layout_gravity="center_horizontal"-->
+<!--            android:layout_marginTop="10dp"/>-->
+        <!--        // 2023.12.25 AZY-->
         <ImageButton
             android:id="@+id/djilogin" android:layout_gravity="center_horizontal"
             android:layout_width="40dp"
@@ -184,32 +187,34 @@
         android:layout_height="65dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
-        <dji.ux.widget.dashboard.DashboardWidget
-            android:id="@+id/Compass"
-            android:layout_width="350dp"
-            android:layout_height="70dp"
-            tools:ignore="RtlHardcoded">
-        </dji.ux.widget.dashboard.DashboardWidget>
+<!--        <dji.ux.widget.dashboard.DashboardWidget-->
+<!--            android:id="@+id/Compass"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="70dp"-->
+<!--            tools:ignore="RtlHardcoded">-->
+<!--        </dji.ux.widget.dashboard.DashboardWidget>-->
+        <!--        // 2023.12.25 AZY-->
     </RelativeLayout>
 
-    <!--引导用户完成罗盘校准界面-->
-    <dji.ux.workflow.CompassCalibratingWorkFlow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+<!--    &lt;!&ndash;引导用户完成罗盘校准界面&ndash;&gt;-->
+<!--    <dji.ux.workflow.CompassCalibratingWorkFlow-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
 
-    <!--飞行器详细状态-->
-    <dji.ux.panel.PreFlightCheckListPanel
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/signal"
-        custom:excludeItem="ESCStatus"
-        android:visibility="gone"
-        />
-    <dji.ux.panel.RTKStatusPanel
-        android:layout_width="500dp"
-        android:layout_height="350dp"
-        android:layout_below="@id/signal"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/>
+<!--    &lt;!&ndash;飞行器详细状态&ndash;&gt;-->
+<!--    <dji.ux.panel.PreFlightCheckListPanel-->
+<!--        android:layout_width="400dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/signal"-->
+<!--        custom:excludeItem="ESCStatus"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
+<!--    <dji.ux.panel.RTKStatusPanel-->
+<!--        android:layout_width="500dp"-->
+<!--        android:layout_height="350dp"-->
+<!--        android:layout_below="@id/signal"-->
+<!--        android:gravity="center"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:visibility="gone"/>-->
+    <!--        // 2023.12.25 AZY-->
     </RelativeLayout>

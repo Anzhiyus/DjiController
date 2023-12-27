@@ -46,6 +46,7 @@
             android:layout_gravity="center"
             android:id="@+id/focal"
             android:entries="@array/camera_focal"
+            android:theme="@style/SpinnerTextStyle"
             />
     </LinearLayout>
 
@@ -64,6 +65,7 @@
             android:layout_gravity="center"
             android:id="@+id/iso_value"
             android:entries="@array/camera_iso"
+            android:theme="@style/SpinnerTextStyle"
             />
         <TextView
             android:layout_width="100dp"
@@ -77,6 +79,7 @@
             android:layout_gravity="center"
             android:id="@+id/aperture_value"
             android:entries="@array/camera_av"
+            android:theme="@style/SpinnerTextStyle"
             />
     </LinearLayout>
     <LinearLayout
@@ -94,6 +97,7 @@
             android:layout_gravity="center"
             android:id="@+id/exposure_value"
             android:entries="@array/camera_ev"
+            android:theme="@style/SpinnerTextStyle"
             />
 
         <TextView
@@ -108,6 +112,7 @@
             android:layout_gravity="center"
             android:entries="@array/camera_shutter"
             android:id="@+id/shutter_value"
+            android:theme="@style/SpinnerTextStyle"
             />
 
     </LinearLayout>
@@ -126,6 +131,7 @@
             android:layout_gravity="center"
             android:id="@+id/img_size"
             android:entries="@array/camera_size"
+            android:theme="@style/SpinnerTextStyle"
             />
         <TextView
             android:layout_width="100dp"
@@ -139,6 +145,7 @@
             android:layout_gravity="center"
             android:entries="@array/image_type"
             android:id="@+id/image_type"
+            android:theme="@style/SpinnerTextStyle"
             />
     </LinearLayout>
     <LinearLayout

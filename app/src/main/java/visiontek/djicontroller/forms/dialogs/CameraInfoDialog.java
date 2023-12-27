@@ -246,6 +246,19 @@ public class CameraInfoDialog extends DialogFragment {
                 camera_focal.setSelection(getFocalIndex("9"));
                 cameraEntity=null;
             }
+            // 2023.12.22 AZY：自定义相机
+            else if(type.equals("Mavic2")){ //精灵4+系列，相机焦距是8mm, 像素是5472*3648
+                camera_name.setText("Mavic2");
+                image_type.setSelection(0);
+                iso_value.setSelection(0);
+                aperture_value.setSelection(0);
+                exposure_value.setSelection(0);
+                shutter_value.setSelection(0);
+                img_Size.setSelection(getSizeIndex(5472,3648));
+                opticalFormat.setText("2.4");
+                camera_focal.setSelection(getFocalIndex("28"));
+                cameraEntity=null;
+            }
         }
         /*精灵3系列和精灵4相机焦距是4mm，分辨率是4000*3000，像元尺寸是1.54μm*/
     }
@@ -255,25 +268,27 @@ public class CameraInfoDialog extends DialogFragment {
     * */
     public String getCameraType(){
         String cameraType=null;
-        BaseProduct product=DJIApplication.getProductInstance();
-        if(product!=null){
-            String name=product.getCamera().getDisplayName();
-            //相机为精灵3系列
-            if (name.equals(DisplayNamePhantom3StandardCamera)||
-                    name.equals(DisplayNamePhantom3AdvancedCamera)||
-                    name.equals(DisplayNamePhantom3ProfessionalCamera)||
-                    name.equals(DisplayNamePhantom34KCamera)){
-                cameraType="Phantom3";
-                return cameraType;
-            }else if (name.equals(DisplayNamePhantom4Camera)){//相机为精灵4
-                cameraType="Phantom4";
-                return cameraType;
-            }else if (name.equals(DisplaynamePhantom4ProCamera)||//相机为精灵4pro,精灵4A，精灵4PV2
-                    name.equals(DisplaynamePhantom4AdvancedCamera)||
-                    name.equals(DisplaynamePhantom4PV2Camera)){
-                cameraType="Phantom4+";
-            }
-        }
+        // 2023.12.22 AZY：自定义相机
+        cameraType="Mavic2";
+//        BaseProduct product=DJIApplication.getProductInstance();
+//        if(product!=null){
+//            String name=product.getCamera().getDisplayName();
+//            //相机为精灵3系列
+//            if (name.equals(DisplayNamePhantom3StandardCamera)||
+//                    name.equals(DisplayNamePhantom3AdvancedCamera)||
+//                    name.equals(DisplayNamePhantom3ProfessionalCamera)||
+//                    name.equals(DisplayNamePhantom34KCamera)){
+//                cameraType="Phantom3";
+//                return cameraType;
+//            }else if (name.equals(DisplayNamePhantom4Camera)){//相机为精灵4
+//                cameraType="Phantom4";
+//                return cameraType;
+//            }else if (name.equals(DisplaynamePhantom4ProCamera)||//相机为精灵4pro,精灵4A，精灵4PV2
+//                    name.equals(DisplaynamePhantom4AdvancedCamera)||
+//                    name.equals(DisplaynamePhantom4PV2Camera)){
+//                cameraType="Phantom4+";
+//            }
+//        }
         return cameraType;
     }
     public FlyCamera getCamera(){

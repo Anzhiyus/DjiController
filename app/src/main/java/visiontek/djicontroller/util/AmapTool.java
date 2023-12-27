@@ -81,6 +81,8 @@ public class AmapTool {
         _amap=amap;
         opts=new cpRPAOptions();
         opts.aMap=_amap;
+        opts.rotate=90; // 2023.12.27 AZY：设置自定义值
+        opts.space=1000; // 2023.12.27 AZY：设置自定义值
         bindEvents();
     }
     public List<LatLng> getDrawArea(){
@@ -232,13 +234,13 @@ public class AmapTool {
                     if(okMarker!=null){
                         okMarker.remove();
                     }
-                    pointsDrawArea.add(latLng);
+                    pointsDrawArea.add(latLng);  // List<LatLng> pointsDrawArea=new ArrayList<>();//绘制区域时的顶点坐标
                     Marker marker= AddPoint(R.drawable.pointshow,latLng,false,null,null,0.5f,0.5f);//加顶点
                     drawArea= _amap.addPolygon(new PolygonOptions()
                             .addAll(pointsDrawArea)
                             .fillColor(Color.argb(50, 0, 128, 0))//0,128,0
                             .strokeColor(Color.GREEN).strokeWidth(1));//绘制区域
-                    drawAreaMarkers.add(marker);
+                    drawAreaMarkers.add(marker); // List<Marker> drawAreaMarkers=new ArrayList<>();//顶点marker
                     if(pointsDrawArea.size()>2){
                         okMarker=AddPoint(R.drawable.ok,latLng,false,null,null,0.5f,0.5f);//加顶点
                     }
@@ -476,13 +478,13 @@ public class AmapTool {
     }
     //加载多边形区域
     public void LoadArea(List<LatLng> rect){
-        ClearArea();
+        ClearArea(); // 清除 polygon centerPoints centerMarker flyarea flylines
         flyarea=_amap.addPolygon(new PolygonOptions()//创建边界
                 .addAll(rect)
                 .fillColor(Color.argb(50, 1, 1, 1))
                 .strokeColor(Color.RED).strokeWidth(1));
 
-            resetCenterMoveMarker(rect);
+            resetCenterMoveMarker(rect); // centerMarker ,更新中点
             int size=rect.size();
             for(int i=0;i<size;i++){
                 LatLng point=rect.get(i);
@@ -642,7 +644,7 @@ public class AmapTool {
                         polygon.remove(marker);
                     }
                 }
-                else if(centerPoints.contains(marker)){//点击的是新增
+                else if(centerPoints.contains(marker)){//点击的是新增, 即点击中点, 生成另外两个中点.
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.corner));
                     markerOptions.draggable(true);
@@ -652,17 +654,22 @@ public class AmapTool {
                     int i=centerPoints.indexOf(marker);//获取所在集合的索引
                     Marker newmarker=_amap.addMarker(markerOptions);
                     polygon.add(i,newmarker);//点要加载正确的位置
-                    marker.remove();
+                    marker.remove(); // 之后继续运行更新区域 LoadArea(list);
                 }
-                else if(okMarker.equals(marker)){
-                    CloseTool(TOOL_DRAWAREA);
+                else if(okMarker.equals(marker)){  // 2023.12.26 AZY：点击OK标志后结束画图
+                    CloseTool(TOOL_DRAWAREA);  // 清除drawAreaMarkers和okMarker
+                    if(drawArea!=null){ // 2023.12.26 AZY：清除 drawArea (Polygon)
+                        drawArea.remove();
+                    }
+                    polygon = new ArrayList<>(drawAreaMarkers);  // 2023.12.26 AZY：自定义一个，解决 polygon 从哪里来的问题
+                    LoadArea(pointsDrawArea);  // 2023.12.26 AZY：清除绘制的 drawArea ,根据数据绘制可编辑的 Polygon
                 }
-                List<LatLng> list = new ArrayList<LatLng>();
+                List<LatLng> list = new ArrayList<LatLng>(); // list复制polygon
                 for (int i = 0; i < polygon.size(); i++) {
                     list.add(polygon.get(i).getPosition());
                 }
-                LoadArea(list);
-                LoadFlyLines(opts.rotate,opts.space);
+                LoadArea(list); // 清除区域，加载list点的标注符号，为polygon添加list坐标，为centerPoints添加边界中心,清除 polygon centerPoints centerMarker flyarea flylines
+                LoadFlyLines(opts.rotate,opts.space);  // 从polygon获得坐标列表，航线角度和间距，创建航线
                 onAreaChangedCallback();
                 return true;
             }
@@ -707,8 +714,8 @@ public class AmapTool {
                     }
                 }
                 List<LatLng> list= getPointsFromArea();
-                UpdateArea(list);
-                UpdateLines(list);
+                UpdateArea(list);  // 更新边界图层flyarea
+                UpdateLines(list); // 更新航线图层flylines
                 UpdateCenterPoints(list);
                 positionBeforeDrag=positionOnDrag;
             }
@@ -721,7 +728,7 @@ public class AmapTool {
     }
     public void HomePointDraggable(Boolean bool){
         if(userPosition!=null)
-        userPosition.setDraggable(bool);
+            userPosition.setDraggable(bool);
     }
     public AMap get_amap(){
         return _amap;

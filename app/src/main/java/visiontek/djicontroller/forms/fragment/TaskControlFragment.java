@@ -142,7 +142,8 @@ public class TaskControlFragment extends MapFragment {
                 refreshUIStatus(taskViewModel.taskstatus);//更新UI
             }
         }
-        maptool.enableEditArea(false);//任务执行时禁止编辑飞行区域
+//        maptool.enableEditArea(false);//任务执行时禁止编辑飞行区域
+        maptool.enableEditArea(true);//任务执行时禁止编辑飞行区域 // 2023.12.25 AZY：测试
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

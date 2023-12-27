@@ -41,6 +41,9 @@ import visiontek.djicontroller.util.Common;
 import static android.content.Context.MODE_PRIVATE;
 import static visiontek.djicontroller.forms.fragment.MapFragment.ON_TASK_LOAD;
 
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+
 public class TaskInfoDialog extends DialogFragment {
     private Context mContext;
     private LinearLayout dialog_task;
@@ -108,7 +111,10 @@ public class TaskInfoDialog extends DialogFragment {
     }
     //获取相机列表
     private void getCameraSpinner(){
-        cameraList=cameraManager.getCameraList();
+        // 2023.12.21 AZY 手动添加相机实例
+        FlyCamera camera=new FlyCamera("id",28,"Mavic2",100,11,1,8,5472,3648,30,"JPEG");//= cameraList.get(index);
+        cameraList.add(camera);
+//        cameraList=cameraManager.getCameraList();
         if(cameraList!=null){
             for (int i=0;i<cameraList.size();i++){
                 cameralist.add(cameraList.get(i).getName());
@@ -244,10 +250,10 @@ public class TaskInfoDialog extends DialogFragment {
                     flyTaskEntity=new FlyTask();
                 }
                 flyTaskEntity.taskname=et_taskname.getText().toString();
-                int index=spinner_camera.getSelectedItemPosition();
+                int index=0; //spinner_camera.getSelectedItemPosition(); //
                 if(index>=0){
                     FlyCamera camera= cameraList.get(index);
-                    flyTaskEntity.cameraid=camera.id;
+                    flyTaskEntity.cameraid="DJI";//camera.id;  // 没有连接无人机，自定义一个
                     flyTaskEntity.cameradirection=spinner_camera_orientation.getSelectedItemPosition();
                     flyTaskEntity.hover=spinner_hover.getSelectedItemPosition();
                     flyTaskEntity.areaASL=String2Int(et_areaASL.getText().toString());
@@ -312,10 +318,11 @@ public class TaskInfoDialog extends DialogFragment {
             res =false;
             return res;
         }
-        else if(cameraList==null||cameraList.size()==0){
-            Common.ShowQMUITipToast(getContext(),"请添加相机", QMUITipDialog.Builder.ICON_TYPE_INFO,500);
-            res=false;
-        }
+        // 2023.12.21 AZY：没有相机
+//        else if(cameraList==null||cameraList.size()==0){
+//            Common.ShowQMUITipToast(getContext(),"请添加相机", QMUITipDialog.Builder.ICON_TYPE_INFO,500);
+//            res=false;
+//        }
         else if(task.taskname==null||task.taskname.isEmpty()){
             Common.ShowQMUITipToast(getContext(),"请填写任务名称", QMUITipDialog.Builder.ICON_TYPE_INFO,500);
             res =false;
